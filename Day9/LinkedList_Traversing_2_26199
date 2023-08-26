@@ -1,0 +1,81 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+    for (int i = 2; i <= sqrt(num); ++i) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int countPrimeNodes(Node* head) {
+    int count = 0;
+    while (head != nullptr) {
+        if (isPrime(head->data)) {
+            count++;
+        }
+        head = head->next;
+    }
+    return count;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Invalid Number" << endl;
+        return 0;
+    }
+
+    Node* head = nullptr;
+    Node* tail = nullptr;
+
+    for (int i = 0; i < n; ++i) {
+        int val;
+        cin >> val;
+        Node* newNode = new Node(val);
+        if (!head) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    int primeCount = countPrimeNodes(head);
+    cout << primeCount << endl;
+
+    // Clean up memory
+    Node* current = head;
+    while (current) {
+        Node* temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    return 0;
+}
+
