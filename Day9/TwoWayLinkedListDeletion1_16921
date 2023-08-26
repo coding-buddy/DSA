@@ -1,0 +1,117 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node* prev;
+
+    Node(int val) {
+        data = val;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
+
+class DoublyLinkedList {
+public:
+    Node* head;
+    Node* tail;
+
+    DoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void insert(int val) {
+        Node* newNode = new Node(val);
+        if (!head) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+
+    void deleteOccurrences(int value) {
+        if (!head || !head->next) {
+            cout << "Deletion not possible" << endl;
+            return;
+        }
+
+        int count = 0;
+        Node* current = head;
+        Node* secondLast = nullptr;
+
+        while (current->next) {
+            if (current->data == value) {
+                count++;
+                if (count >= 1) {
+                    secondLast = current;
+                }
+            }
+            current = current->next;
+        }
+
+        if (count < 2 || !secondLast) {
+            cout << "Deletion not possible" << endl;
+            return;
+        }
+
+        Node* prevNode = secondLast->prev;
+        Node* nextNode = secondLast->next;
+
+        if (prevNode) {
+            prevNode->next = nextNode;
+        } else {
+            head = nextNode;
+        }
+
+        if (nextNode) {
+            nextNode->prev = prevNode;
+        } else {
+            tail = prevNode;
+        }
+
+        delete secondLast;
+
+        // Print the updated list in reverse order
+        current = tail;
+        while (current) {
+            cout << current->data << endl;
+            current = current->prev;
+        }
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+
+    if (n <= 2 || n > 20) {
+        cout << "Invalid list size" << endl;
+        return 0;
+    }
+
+    DoublyLinkedList list;
+
+    for (int i = 0; i < n; ++i) {
+        int val;
+        cin >> val;
+        list.insert(val);
+    }
+
+    int deleteValue;
+    cin >> deleteValue;
+
+    list.deleteOccurrences(deleteValue);
+
+    return 0;
+}
