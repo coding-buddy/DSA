@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int arr[10], x;
+    int n = 10;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    scanf("%d", &x);
+
+    int sam = 0;
+    int v = 0;
+    for (int i = 0; i < n; i++) {
+        sam++;
+        if (arr[i] == x) {
+            v = 1;
+            break;
+        }
+    }
+
+    if (v == 1) {
+        printf("%d\n", sam);
+    } else {
+        printf("ELEMENT NOT FOUND\n");
+    }
+
+    return 0;
+}
