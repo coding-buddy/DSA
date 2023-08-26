@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int temp[8];
+    int numTemp = 0;
+    int index, newTemp;
+    
+    // read temperatures
+    for (int i = 0; i < 7; i++){
+        scanf("%d", &temp[i]);
+        numTemp++;
+    }
+    
+    // read index
+    scanf("%d", &index);
+    if (index > 7 || index < 0){
+        printf("Invalid Position");
+        return 0;
+    }
+    
+    // read temp to insert
+    scanf("%d", &newTemp);
+    
+    // insert temp at given index
+    for (int i = numTemp; i > index; i--) {
+        temp[i] = temp[i - 1];
+    }
+    temp[index] = newTemp;
+    numTemp++;
+    
+      
+    // Print the updated temperatures array
+    for (int i = 0; i < numTemp; i++) {
+        printf("%d", temp[i]);
+        if (i < numTemp - 1) {
+            printf(",");
+        }
+    }
+    
+    
+    return 0;
+}
