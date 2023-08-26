@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int n1, n2;
+
+    // Input size of the first array
+    scanf("%d", &n1);
+    if (n1 <= 0 || n1 > 20) {
+        printf("Invalid Array\n");
+        return 0;
+    }
+
+    int arr1[n1];
+
+    // Input elements of the first array in non-decreasing order
+    for (int i = 0; i < n1; i++) {
+        scanf("%d", &arr1[i]);
+        if (i > 0 && arr1[i] < arr1[i - 1]) {
+            printf("Incorrect Array Elements\n");
+            return 0;
+        }
+    }
+
+    // Input size of the second array
+    scanf("%d", &n2);
+    if (n2 <= 0 || n2 > 20) {
+        printf("Invalid Array\n");
+        return 0;
+    }
+
+    int arr2[n2];
+
+    // Input elements of the second array in non-decreasing order
+    for (int i = 0; i < n2; i++) {
+        scanf("%d", &arr2[i]);
+        if (i > 0 && arr2[i] < arr2[i - 1]) {
+            printf("Incorrect Array Elements\n");
+            return 0;
+        }
+    }
+
+    // Check if the size of two arrays is the same
+    if (n1 == n2) {
+        printf("Invalid Array\n");
+        return 0;
+    }
+
+    // Merge and print the elements in non-decreasing order
+    int mergedArray[n1 + n2];
+    int i = 0, j = 0, k = 0;
+
+    while (i < n1 && j < n2) {
+        if (arr1[i] <= arr2[j])
+            mergedArray[k++] = arr1[i++];
+        else
+            mergedArray[k++] = arr2[j++];
+    }
+
+    while (i < n1)
+        mergedArray[k++] = arr1[i++];
+    
+    while (j < n2)
+        mergedArray[k++] = arr2[j++];
+
+    for (int m = 0; m < n1 + n2; m++) {
+        printf("%d\n", mergedArray[m]);
+    }
+
+    return 0;
+}
